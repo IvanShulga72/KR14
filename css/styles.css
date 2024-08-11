@@ -1,0 +1,146 @@
+@font-face {
+    font-family: 'NunitoBold';
+    src: url("../fonts/Nunito-Bold.ttf");
+}
+
+body {
+    font-family: NunitoBold, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+.main {
+    display: flex;
+    position: relative;
+}
+
+.logo {
+    margin-top: 40px;
+    position: absolute;
+    right: calc((100% - 245px) / 2);
+    /*Лучше, конечно, нормально выровнять, но не получилось*/
+}
+
+.left {
+    width: 50%;
+    background: white;
+    display: flex;
+    justify-content: right;
+}
+
+.right {
+    width: 50%;
+    background: #F8F8FA;
+    padding-top: 253px;
+    padding-left: 11px;
+}
+
+.container {
+    padding-top: 200px;
+    padding-bottom: 200px;
+    padding-right: 85px;
+    max-width: 452px;
+}
+
+.title {
+    font-size: 36px;
+    color: #000000;
+    margin-bottom: 30px;
+}
+
+.text {
+    font-size: 22px;
+    line-height: 27px;
+    color: #636363;
+    margin-bottom: 75px;
+}
+
+.for-input {
+    display: block;
+    font-size: 16px;
+    color: #C6C6C4;
+    padding-bottom: 20px;
+}
+
+.red {
+    color: red;
+}
+
+.input {
+    border: 1px solid transparent;
+    outline: none;
+    border-bottom: 1px solid #C6C6C4;
+    width: 452px;
+    padding: 0;
+    font-size: 27px;
+}
+
+.rights {
+    padding-top: 10px;
+    padding-left: 0;
+    display: block;
+    font-size: 16px;
+    color: #636363;
+    margin-bottom: 40px;
+}
+
+.checkbox {
+    width: 11px;
+    height: 11px;
+    outline: none;
+    margin: 0 12px 0 0;
+}
+
+.form-link {
+    display: block;
+    text-decoration: none;
+    text-align: center;
+    font-size: 16px;
+    color: #636363;
+}
+
+.action {
+    text-align: center;
+    margin-bottom: 45px;
+}
+
+.btn {
+    width: 210px;
+    height: 70px;
+    background: #DD3142;
+    border-radius: 40px;
+    font-size: 20px;
+    color: #FFFFFF;
+    border: none;
+}
+
+.pop-up {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    font-size: 27px;
+}
+
+.pop-up__window {
+    max-width: 700px;
+    background: white;
+    padding: 40px;
+}
+
+.pop-up__action {
+    text-align: right;
+}
+
+.pop-up__btn {
+    width: 210px;
+    height: 70px;
+    background: #DD3142;
+    border-radius: 40px;
+    font-size: 27px;
+    color: #FFFFFF;
+    border: none;
+}

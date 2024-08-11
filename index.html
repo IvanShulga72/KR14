@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>HomeWorks</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+<main class="main">
+    <div class="logo">
+        <img src="images/logo.png" alt="homeWorks">
+    </div>
+    <div class="left">
+        <div class="container">
+            <h2 class="title">Get your free account</h2>
+            <div class="text">Try homeWorks BUSINESS free for 15 days. Downgrade to Basic (Free Forever) anytime.</div>
+
+            <form action="" class="order">
+                <label for="full-name" class="full-name for-input">
+                    <div>Full Name</div>
+                    <input type="text" id="full-name" class="input">
+                    <div class="under-input red">Заполните Full Name
+                        <br>Full Name может содержать только буквы и пробел
+                    </div>
+                </label>
+                <label for="username" class="for-input">
+                    <div>Your username</div>
+                    <input type="text" id="username" class="input">
+                    <div class="under-input red">Заполните Your username
+                    <br>Your username - может содержать только буквы, цифры, символ подчеркивания и тире
+                    </div>
+                </label>
+                <label for="mail" class="mail for-input">
+                    <div>E-mail</div>
+                    <input type="text" id="mail" class="input">
+                    <div class="under-input red">Заполните E-mail</div>
+                </label>
+                <label for="password" class="for-input">
+                    <div>Password</div>
+                    <input type="text" id="password" class="input">
+                    <div class="under-input red">Заполните Password
+                        <br>Поле пароля должно содержать минимум 8 символов, среди которых есть:
+                        <br>- хотя бы одна буква в верхнем регистре
+                        <br>- хотя бы одна цифра
+                        <br>- хотя бы один спецсимвол
+                    </div>
+                </label>
+                <label for="rep-password" class="rep-password for-input">
+                    <div>Repeat Password</div>
+                    <input type="text" id="rep-password" class="input">
+                    <div class="under-input red">Заполните Repeat Password</div>
+                </label>
+                <label for="rights" class="rights">
+                    <div>
+                        <input type="checkbox" id="rights" class="checkbox">
+                        <span>Agree to our Terms of Service and Privacy Statement</span>
+                    </div>
+                    <div class="under-input red">Заполните согласие на права</div>
+                </label>
+                <div class="action">
+                    <button class="btn" id="btn" type="button">Sign Up</button>
+                </div>
+                <a href="#" class="form-link">Already have an account?</a>
+            </form>
+        </div>
+    </div>
+    <div class="right">
+        <div class="image">
+            <img src="images/rocket.png" alt="rocket">
+        </div>
+    </div>
+    <div class="pop-up" >
+        <div class="pop-up__window">
+            <div class="pop-up__text">На вашу почту выслана ссылка, перейдите по ней, чтобы завершить регистрацию</div>
+            <div class="pop-up__action">
+                <button type="button" class="pop-up__btn">OK</button>
+            </div>
+        </div>
+    </div>
+</main>
+
+
+<script src="scripts/script.js"></script>
+<script src="scripts/jquery-3.7.1.min.js"></script>
+</body>
+</html>
