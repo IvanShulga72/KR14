@@ -75,6 +75,10 @@ body {
     font-size: 27px;
 }
 
+.under-input {
+    display: none;
+}
+
 .rights {
     padding-top: 10px;
     padding-left: 0;

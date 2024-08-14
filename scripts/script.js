@@ -1,6 +1,8 @@
 window.onload = function () {
 
-    $('.under-input').hide();
+    if(!localStorage.getItem('clients')) {
+        localStorage.setItem('clients', '[]');
+    }
 
     const fullName = document.getElementById('full-name');
     const userName = document.getElementById('username');
@@ -11,64 +13,62 @@ window.onload = function () {
     const mail = document.getElementById('mail');
     const formLink = document.querySelector('.form-link');
 
-    // fullName.onkeydown = (event) => {
-    //     if (parseInt(event.key)) {
-    //         return false;
-    //     }
-    // }
-    // userName.onkeydown = (event) => {
-    //     if (event.key === '.' || event.key === ',') {
-    //         return false;
-    //     }
-    // }
-    // rights.onchange = (event) => {
-    //     if (event.target.checked) {
-    //         console.log('Согласен');
-    //     } else {
-    //         console.log('Не согласен');
-    //     }
-    //
-    // }
     btn.onclick = (event) => {
 
-        $('.input').css('border-color', 'transparent');
-        $('.input').css('border-bottom', '1px solid #C6C6C4');
-        $('.under-input').css('display', 'none');
+        dontShowUnderText();
         let flag = true;
 
-        if (!fullName.value.match(/^[a-zа-яё\s]+$/i)) {  //!fullName.value.match(/[\w\s]+/i) так почему-то не работает \w
+        if (!fullName.value) {
+            redAndBlock(fullName);
             flag = false;
-            fullName.style.borderColor = 'red';
-            fullName.nextElementSibling.style.display = 'block';
+        } else if (!fullName.value.match(/^[a-zа-яё\s]+$/i)) {
+            redAndBlock(fullName);
+            flag = false;
+            fullName.nextElementSibling.innerText = 'Full Name может содержать только буквы и пробел';
         }
-        if (!userName.value.match(/[a-zа-яё\d_\-\s]+/i)) {
+
+        if (!userName.value) {
+            redAndBlock(userName);
             flag = false;
-            userName.style.borderColor = 'red';
-            userName.nextElementSibling.style.display = 'block';
+        } else if (!userName.value.match(/^[a-zа-яё0-9_\-\s]+$/i)) {
+            redAndBlock(userName);
+            flag = false;
+            userName.nextElementSibling.innerText = 'Your username может содержать только буквы, цифры, символ подчеркивания и тире';
         }
-        if (!mail.value.match(/(\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,6})/)) { //скопированно с методички
+
+        if (!mail.value) {
+            redAndBlock(mail);
             flag = false;
-            mail.style.borderColor = 'red';
-            mail.nextElementSibling.style.display = 'block';
+        } else if (!mail.value.match(/(\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,6})/)) { //скопированно с методички
+            redAndBlock(mail);
+            flag = false;
+            mail.nextElementSibling.innerText = 'Невалидный E-mail';
         }
-        if (!pass.value) { //не понимаю где неправильно .match(/^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])([a-zA-Z0-9]{8,})$/)
+
+        if (!pass.value) {
+            redAndBlock(pass);
             flag = false;
-            pass.style.borderColor = 'red';
-            pass.nextElementSibling.style.display = 'block';
+        } else if (!pass.value.match(/^(?=.*[A-Z])(?=.*\d)(?=.*[@.#$!%*?&^])[A-Za-z\d@.#$!%*?&]{8,}$/)) {
+            redAndBlock(pass);
+            flag = false;
+            pass.nextElementSibling.innerText = 'Поле пароля должно содержать минимум 8 символов, среди которых есть:\n' +
+                '- хотя бы одна буква в верхнем регистре\n' +
+                '- хотя бы одна цифра\n' +
+                '- хотя бы один спецсимвол';
         }
-        if (!repPass.value) { //не понимаю где неправильно .match(/^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])([a-zA-Z0-9]{8,})$/)
+
+        if (!repPass.value) {
+            redAndBlock(repPass);
             flag = false;
-            repPass.style.borderColor = 'red';
-            repPass.nextElementSibling.style.display = 'block';
         }
-        if (!(repPass.value === pass.value)) {
+
+        if (pass.value && repPass.value && !(repPass.value === pass.value)) {
+            redAndBlock(pass);
+            redAndBlock(repPass);
             flag = false;
-            repPass.style.borderColor = 'red';
-            repPass.nextElementSibling.style.display = 'block';
-            pass.style.borderColor = 'red';
-            pass.nextElementSibling.style.display = 'block';
             repPass.nextElementSibling.innerText = "Не совпадают пароли";
         }
+
         if (!rights.checked) {
             flag = false;
             rights.parentElement.nextElementSibling.style.display = 'block';
@@ -76,17 +76,20 @@ window.onload = function () {
 
         if (flag) {
             document.getElementsByClassName('pop-up')[0].style.display = 'flex';
-            client = {
+            let clientsArray = [];
+            let client = {
                 fullName: fullName.value,
                 userName: userName.value,
                 mail: mail.value,
                 password: pass.value,
                 rights: rights.value
             }
-            let clientsArray = [];
+            console.log(client);
             let clients = localStorage.getItem('clients');
+            console.log(clients);
             if (clients) {
                 clientsArray = JSON.parse(clients);
+                console.log(clientsArray);
             }
             clientsArray.push(client);
             localStorage.setItem('clients', JSON.stringify(clientsArray));
@@ -104,65 +107,74 @@ window.onload = function () {
         loginPage();
     }
 
-    function loginPage(event) {
-        $('.input').css('border-color', 'transparent');
-        $('.input').css('border-bottom', '1px solid #C6C6C4');
-        $('.under-input').css('display', 'none');
+    function loginPage() {
+        dontShowUnderText()
         document.querySelector('.title').innerText = 'Log in to the system';
         btn.innerText = 'Sign In';
         fullName.parentElement.remove();
         mail.parentElement.remove();
         repPass.parentElement.remove();
-        rights.parentElement.remove();
+        rights.parentElement.parentElement.remove();
         formLink.innerText = "Registration";
+        document.querySelector('.order').reset();
 
         formLink.onclick = () => {
             location.reload();
         };
 
-        document.querySelector('.order').reset();
-
         btn.onclick = (event) => {
+            dontShowUnderText();
+
+            if (!userName.value) {
+                redAndBlock(userName);
+            }
+            else if (!userName.value.match(/^[a-zа-яё0-9_\-\s]+$/i)) {
+                redAndBlock(userName);
+                userName.nextElementSibling.innerText = 'Your username может содержать только буквы, цифры, символ подчеркивания и тире';
+            }
+
+            if (!pass.value) {
+                redAndBlock(pass);
+            }
+            else if (!pass.value.match(/^(?=.*[A-Z])(?=.*\d)(?=.*[@.#$!%*?&^])[A-Za-z\d@.#$!%*?&]{8,}$/)) {
+                redAndBlock(pass);
+                pass.nextElementSibling.innerText = 'Поле пароля должно содержать минимум 8 символов, среди которых есть:\n' +
+                    '- хотя бы одна буква в верхнем регистре\n' +
+                    '- хотя бы одна цифра\n' +
+                    '- хотя бы один спецсимвол';
+            }
 
             let clientsArray = JSON.parse(localStorage.getItem('clients'))
             let flagUserName = false;
             let flagPassword = false;
             let fullNameClient;
             for (let i = 0; i < clientsArray.length; i++) {
+                console.log(clientsArray[i].userName);
                 if (clientsArray[i].userName === userName.value) {
                     flagUserName = true;
+                    console.log(clientsArray[i].password);
                     if (clientsArray[i].password === pass.value) {
                         flagPassword = true;
+                        fullNameClient = clientsArray[i].fullName;
+                        break;
                     }
                 }
-                fullNameClient = clientsArray[i].fullName;
-                break;
             }
-            if (!flagUserName) {
-                userName.style.borderColor = 'red';
-                userName.nextElementSibling.style.display = 'block';
+
+            if (userName.value && !flagUserName) {
+                redAndBlock(userName);
                 userName.nextElementSibling.innerHTML = 'Такой пользователь не зарегистрирован';
             }
-            if (!flagPassword) {
-                pass.style.borderColor = 'red';
-                pass.nextElementSibling.style.display = 'block';
+
+            if (pass.value && flagUserName && !flagPassword) {
+                redAndBlock(pass);
                 pass.nextElementSibling.innerHTML = 'Неверный пароль';
             }
-            if (!userName.value.match(/[a-zа-яё\d_\-\s]+/i)) {
-                flag = false;
-                userName.style.borderColor = 'red';
-                userName.nextElementSibling.style.display = 'block';
-                userName.nextElementSibling.innerHTML = 'Заполните Your username<br>Your username - может содержать только буквы, цифры, символ подчеркивания и тире';
-            }
-            if (!pass.value) { //не понимаю где неправильно .match(/^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])([a-zA-Z0-9]{8,})$/)
-                flag = false;
-                pass.style.borderColor = 'red';
-                pass.nextElementSibling.style.display = 'block';
-                pass.nextElementSibling.innerHTML = "Заполните Password <br>Поле пароля должно содержать минимум 8 символов, среди которых есть: <br>- хотя бы одна буква в верхнем регистре <br>- хотя бы одна цифра <br>- хотя бы один спецсимвол;"
-            }
+
             if (flagUserName && flagPassword) {
                 personalAccount(fullNameClient);
             }
+
         }
     }
 
@@ -175,6 +187,17 @@ window.onload = function () {
         userName.parentElement.remove();
         pass.parentElement.remove();
         formLink.remove();
+    }
+
+    function redAndBlock(item) {
+        item.style.borderColor = 'red';
+        item.nextElementSibling.style.display = 'block';
+    }
+
+    function dontShowUnderText () {
+        $('.input').css('border-color', 'transparent');
+        $('.input').css('border-bottom', '1px solid #C6C6C4');
+        $('.under-input').css('display', 'none');
     }
 }
 
