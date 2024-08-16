@@ -21,6 +21,7 @@ window.onload = function () {
         if (!fullName.value) {
             redAndBlock(fullName);
             flag = false;
+            fullName.nextElementSibling.innerText = 'Заполните Full Name';
         } else if (!fullName.value.match(/^[a-zа-яё\s]+$/i)) {
             redAndBlock(fullName);
             flag = false;
@@ -30,6 +31,7 @@ window.onload = function () {
         if (!userName.value) {
             redAndBlock(userName);
             flag = false;
+            userName.nextElementSibling.innerText = 'Заполните Your username';
         } else if (!userName.value.match(/^[a-zа-яё0-9_\-\s]+$/i)) {
             redAndBlock(userName);
             flag = false;
@@ -39,6 +41,7 @@ window.onload = function () {
         if (!mail.value) {
             redAndBlock(mail);
             flag = false;
+            mail.nextElementSibling.innerText = 'Заполните E-mail';
         } else if (!mail.value.match(/(\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,6})/)) { //скопированно с методички
             redAndBlock(mail);
             flag = false;
@@ -48,6 +51,7 @@ window.onload = function () {
         if (!pass.value) {
             redAndBlock(pass);
             flag = false;
+            pass.nextElementSibling.innerText = 'Заполните Password';
         } else if (!pass.value.match(/^(?=.*[A-Z])(?=.*\d)(?=.*[@.#$!%*?&^])[A-Za-z\d@.#$!%*?&]{8,}$/)) {
             redAndBlock(pass);
             flag = false;
@@ -60,6 +64,8 @@ window.onload = function () {
         if (!repPass.value) {
             redAndBlock(repPass);
             flag = false;
+            repPass.nextElementSibling.innerText = "Заполните Repeat Password";
+
         }
 
         if (pass.value && repPass.value && !(repPass.value === pass.value)) {
@@ -127,21 +133,12 @@ window.onload = function () {
 
             if (!userName.value) {
                 redAndBlock(userName);
-            }
-            else if (!userName.value.match(/^[a-zа-яё0-9_\-\s]+$/i)) {
-                redAndBlock(userName);
-                userName.nextElementSibling.innerText = 'Your username может содержать только буквы, цифры, символ подчеркивания и тире';
+                userName.nextElementSibling.innerText = 'Заполните Your username';
             }
 
             if (!pass.value) {
                 redAndBlock(pass);
-            }
-            else if (!pass.value.match(/^(?=.*[A-Z])(?=.*\d)(?=.*[@.#$!%*?&^])[A-Za-z\d@.#$!%*?&]{8,}$/)) {
-                redAndBlock(pass);
-                pass.nextElementSibling.innerText = 'Поле пароля должно содержать минимум 8 символов, среди которых есть:\n' +
-                    '- хотя бы одна буква в верхнем регистре\n' +
-                    '- хотя бы одна цифра\n' +
-                    '- хотя бы один спецсимвол';
+                pass.nextElementSibling.innerText = 'Заполните Password';
             }
 
             let clientsArray = JSON.parse(localStorage.getItem('clients'))
@@ -161,12 +158,12 @@ window.onload = function () {
                 }
             }
 
-            if (userName.value && !flagUserName) {
+            if (userName.value && pass.value && !flagUserName) {
                 redAndBlock(userName);
                 userName.nextElementSibling.innerHTML = 'Такой пользователь не зарегистрирован';
             }
 
-            if (pass.value && flagUserName && !flagPassword) {
+            if (userName.value && pass.value && flagUserName && !flagPassword) {
                 redAndBlock(pass);
                 pass.nextElementSibling.innerHTML = 'Неверный пароль';
             }
